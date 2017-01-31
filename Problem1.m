@@ -74,7 +74,7 @@ title('Return Power P(R)')
 xlabel('R [km]')
 ylabel('P(R) [W]')
 for i = 1:length(P_R)
-    text(R_km(i), P_R(i), num2str(P_R(i)));
+    text(R_km(i), P_R(i), strcat( num2str(P_R(i))));
 end
 
 fprintf('[Answer Q3] Pback = [ %.2e %.2e %.2e %.2e %.2e %.2e ] W\n', P_R(1), P_R(2), P_R(3), P_R(4), P_R(5), P_R(6));
@@ -191,6 +191,9 @@ fprintf('[Answer Q7] Npulses = %d \n', Npulses);
 R_raman = linspace(0.2, 4);
 P_raman = 1e-3*(K./R_raman.^2).*(Beta_aer+Beta_mol).*exp(-2*(Alpha_aer+Alpha_mol).*R_raman); % [W]
 
+Lsun = 3e-6; % [Wcm-2nm-1sr-1]
+Pback_sun = Lsun * Ar_cm * Delta_Omega * Delta_Lambda; % [W]
+
 % figure
 subplot(2, 2, 4);
 semilogy(R_raman,P_raman,'-');
@@ -200,7 +203,7 @@ ylabel('Praman(R) [W]')
 hold on
 semilogy(R_km, P_R, ':r*');
 hold on
-semilogy(R_raman,ones(size(R_raman))*3e-6,'g');
+semilogy(R_raman,ones(size(R_raman))*Pback_sun,'g');
 legend('Raman','Elastic','Day-time background')
 
 %% 9. Compute the photodiode NEP and its quantum efficiency (eta)
